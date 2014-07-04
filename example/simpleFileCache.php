@@ -17,6 +17,6 @@ $calculateMyVar = function ()
     return date("Y-m-d H:i:s");
 };
 
-$cacheItem = $cachePool->get("myVar", 60, $calculateMyVar);
+$cacheItem = $cachePool->getItem("myVar", 60, $calculateMyVar);
 
 var_dump($cacheItem);
