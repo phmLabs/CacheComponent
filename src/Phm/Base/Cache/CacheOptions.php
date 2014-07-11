@@ -10,14 +10,14 @@ class CacheOptions
 
     private $isStaleOnRevalidate = false;
 
-    public function setStaleTime($staleWhileRevalidate)
+    public function setStaleTime($staleTime)
     {
-        $this->staleWhileRevalidate = $staleWhileRevalidate;
+        $this->staleTime = $staleTime;
     }
 
     public function getStaleTime()
     {
-        return $this->staleWhileRevalidate;
+        return $this->staleTime;
     }
 
     public function setStaleIfError($isStaleOnError)
@@ -27,7 +27,7 @@ class CacheOptions
 
     public function getStaleIfError()
     {
-        return $this->isStaleIfnError;
+        return $this->isStaleIfError;
     }
 
     public function setIsStaleOnRevalidate($isStaleOnRevalidate)
@@ -42,17 +42,11 @@ class CacheOptions
 
     public function merge(CacheOptions $cacheOptions)
     {
-        // @error merge function not updated when code was updated
         $mergedOptions = clone ($this);
         
-        $newStaleIfErrorTime = $cacheOptions->getStaleIfErrorTime();
-        if (! is_null($newStaleIfErrorTime)) {
-            $mergedOptions->setStaleIfErrorTime($newStaleIfErrorTime);
-        }
-        
-        $staleWhileRevalidateTime = $cacheOptions->getStaleWhileRevalidateTime();
-        if (! is_null($newStaleIfErrorTime)) {
-            $mergedOptions->setStaleWhileRevalidateTime($staleWhileRevalidateTime);
+        $newStaleTime = $cacheOptions->getStaleTime();
+        if (! is_null($newStaleTime)) {
+            $mergedOptions->setStaleTime($newStaleTime);
         }
         
         return $mergedOptions;

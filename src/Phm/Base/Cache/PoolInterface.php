@@ -18,6 +18,8 @@ interface PoolInterface
     public function removeItem($key);
 
     /**
+     * This function is used to retrieve data from the cache. If the data is not set this function is able
+     * to execute a callable (e.g. Closure) for calculating the value.
      *
      * @param string $key
      *            The cache key
@@ -29,7 +31,7 @@ interface PoolInterface
      * @param CacheOptions $cacheOptions
      *            The cache options that will overwrite the standard cache
      *            options set in the constructor
-     * @throws Exception
+     * @throws \Exception
      * @return mixed
      */
     public function getItem($key, $ttl = 0, callable $callable = null, CacheOptions $cacheOptions = null);

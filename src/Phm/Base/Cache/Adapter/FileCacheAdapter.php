@@ -3,8 +3,6 @@ namespace Phm\Base\Cache\Adapter;
 
 use Phm\Base\Cache\KeyNotFoundException;
 
-use Phm\Base\Cache\CacheItem;
-
 class FileCacheAdapter implements CacheAdapter
 {
 

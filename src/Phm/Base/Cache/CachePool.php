@@ -34,6 +34,8 @@ class CachePool implements PoolInterface
     }
 
     /**
+     * This function is used to retrieve data from the cache. If the data is not set this function is able
+     * to execute a callable (e.g. Closure) for calculating the value.
      *
      * @param string $key
      *            The cache key
@@ -45,7 +47,7 @@ class CachePool implements PoolInterface
      * @param CacheOptions $cacheOptions
      *            The cache options that will overwrite the standard cache
      *            options set in the constructor
-     * @throws Exception
+     * @throws \Exception
      * @return mixed
      */
     public function getItem($key, $ttl = 0, callable $callable = null, CacheOptions $cacheOptions = null)
@@ -65,19 +67,19 @@ class CachePool implements PoolInterface
                 try {
                     $value = $callable();
                     $this->setCacheItem($key, $value, $ttl, $mergedCacheOptions);
+                    return $value;
                 } catch (\Exception $e) {
-                    if ($mergedCacheOptions->isStaleOnError()) {
+                    if ($mergedCacheOptions->getStaleIfError()) {
                         $value = $cacheItem->getValue();
                         if (is_null($value)) {
                             throw $e;
                         }
+                        return $value;
                     }
                 }
-                return $value;
-            }else{
-                throw new KeyNotFoundException("The key '".$key."' was not found in the cache.");
             }
         }
+        throw new KeyNotFoundException("The key '".$key."' was not found in the cache.");
     }
 
     /**

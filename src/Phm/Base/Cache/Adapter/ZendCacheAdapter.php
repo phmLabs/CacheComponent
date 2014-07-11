@@ -1,16 +1,18 @@
 <?php
 namespace Phm\Base\Cache\Adapter;
 
-use Phm\Base\Cache\CacheItem;
-
 class ZendCacheAdapter implements CacheAdapter
 {
 
     private $zendStorage;
 
-    public function __construct(Zend\Cache\Storage\StorageInterface $storage)
+    public function __construct(\Zend\Cache\Storage\StorageInterface $storage)
     {
         $this->zendStorage = $storage;
+    }
+
+    public function remove($key) {
+
     }
 
     public function get($key)
